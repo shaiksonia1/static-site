@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Design Document and Prototype: Static Site Generation for E-Commerce Platform</title>
+  <style>
+    /* General styles */
+    body {
+      font-family: 'Arial', sans-serif;
+      line-height: 1.6;
+      margin: 0;
+      padding: 0;
+      background-color: #f8f9fa;
+      color: #333;
+    }
+
+    .container {
+      width: 80%;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    h1, h2, h3 {
+      color: #2c3e50;
+    }
+
+    h1 {
+      font-size: 2rem;
+      text-align: center;
+      margin-top: 20px;
+      color: #34495e;
+    }
+
+    /* Header section */
+    header {
+      background-color: #3498db;
+      color: white;
+      padding: 20px;
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 2.5rem;
+    }
+
+    /* Section styles */
+    section {
+      margin-bottom: 30px;
+    }
+
+    .section-heading {
+      font-size: 1.5rem;
+      font-weight: bold;
+      margin-top: 30px;
+      margin-bottom: 10px;
+      color: #2c3e50;
+    }
+
+    p, ul {
+      font-size: 1rem;
+      line-height: 1.8;
+    }
+
+    ul {
+      padding-left: 20px;
+    }
+
+    li {
+      margin-bottom: 10px;
+    }
+
+    code {
+      display: block;
+      background-color: #ecf0f1;
+      padding: 10px;
+      border-radius: 5px;
+      font-family: 'Courier New', monospace;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
+
+    /* Responsive design */
+    @media (max-width: 768px) {
+      .container {
+        width: 95%;
+      }
+      h1, h2 {
+        font-size: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <h1>Static Site Generation for E-Commerce Platform</h1>
+    </header>
+
+    <!-- Objective Section -->
+    <section>
+      <h2 class="section-heading">Objective</h2>
+      <p>
+        To demonstrate how a static site can emulate the functionality of e-commerce platforms like Amazon or Flipkart using static site generation (SSG) techniques, client-side search, and optimization strategies. The goal is to host the website on a serverless platform like Netlify or Cloudflare, ensuring scalability, cost efficiency, and acceptable performance.
+      </p>
+    </section>
+
+    <section>
+      <h2 class="section-heading">Rationale</h2>
+      <ul>
+        <li><strong>Static Site Generation (SSG):</strong> Catalog data, stored in a database, can be exported and used to generate static HTML pages using SSG tools such as Next.js, Gatsby, or Eleventy.</li>
+        <li><strong>Client-Side Search:</strong> Leverage JavaScript libraries like Lunr.js or Elasticlunr to enable full-text search capabilities directly in the browser.</li>
+        <li><strong>Performance Optimization:</strong> Use lazy loading for images and infinite scrolling for product listings, compress assets (e.g., Brotli or Gzip), and optimize images (WebP format).</li>
+        <li><strong>Limits:</strong> Support a catalog size of up to ~50,000 products by dividing data into multiple JSON files, loaded dynamically as needed.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2 class="section-heading">Design Plan</h2>
+
+      <h3>1. Architecture</h3>
+      <ul>
+        <li><strong>Data Pipeline:</strong> Extract data from the database into structured formats (e.g., JSON or CSV). Use an SSG tool to generate static pages for each product, category, and search index.</li>
+        <li><strong>Frontend Framework:</strong> Utilize a modern frontend framework (e.g., React or Vue.js) to enhance interactivity.</li>
+        <li><strong>Hosting:</strong> Deploy static files to Netlify or Cloudflare for fast, distributed delivery.</li>
+      </ul>
+
+      <h3>2. Search Implementation</h3>
+      <ul>
+        <li><strong>Pre-Build Search Index:</strong> Use tools like Lunr.js to preprocess and generate a search index during the build phase. Store the index in a compressed JSON file.</li>
+        <li><strong>Search Features:</strong> Tokenization to remove filler words. Stemming for word variations. Fuzzy matching for typos.</li>
+      </ul>
+
+      <h3>3. Scalability</h3>
+      <ul>
+        <li>Divide product data into paginated or categorized JSON files to prevent loading all data at once.</li>
+        <li>Enable dynamic loading of JSON files based on user interactions.</li>
+      </ul>
+
+      <h3>4. Styling and User Experience</h3>
+      <ul>
+        <li><strong>Responsive Design:</strong> Ensure the site is mobile-friendly with flexible grids and scalable fonts.</li>
+        <li><strong>Loading Indicators:</strong> Provide feedback during data loading for a seamless experience.</li>
+      </ul>
+
+      <h3>5. Performance Metrics</h3>
+      <ul>
+        <li><strong>Build Time:</strong> Keep under 10 minutes for up to 50,000 products.</li>
+        <li><strong>Page Load Time:</strong> Maintain under 2 seconds for key pages on average devices.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2 class="section-heading">Prototype</h2>
+
+      <h3>Assumptions:</h3>
+      <ul>
+        <li>Catalog contains 1,000 products.</li>
+        <li>Each product has the following attributes: name, description, price, image URL, category, and tags.</li>
+      </ul>
+
+      <h3>Steps:</h3>
+      <ol>
+        <li>Data Preparation: Use mock JSON data to simulate product information.</li>
+        <li>SSG Tool: Use Next.js to generate static pages for each product and category. Build a static search index using Lunr.js.</li>
+        <li>Client-Side Implementation: Implement a search bar powered by the pre-built index. Display product listings with filters and sorting.</li>
+        <li>Deployment: Host on Netlify and configure caching for optimized delivery.</li>
+      </ol>
+
+      <h3>Example Code Snippet:</h3>
+      <code>
+        &lt;!DOCTYPE html&gt;
+        &lt;html lang="en"&gt;
+          &lt;head&gt;
+            &lt;meta charset="UTF-8"&gt;
+            &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+            &lt;title&gt;E-Commerce Prototype&lt;/title&gt;
+            &lt;link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"&gt;
+          &lt;/head&gt;
+          &lt;body&gt;
+            &lt;header class="bg-blue-500 text-white p-4"&gt;
+              &lt;h1 class="text-center text-2xl"&gt;Static E-Commerce Site&lt;/h1&gt;
+            &lt;/header&gt;
+            &lt;main class="p-6"&gt;
+              &lt;section id="search" class="mb-4"&gt;
+                &lt;input type="text" id="search-bar" placeholder="Search products..." class="border p-2 w-full"&gt;
+              &lt;/section&gt;
+              &lt;section id="products" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"&gt;
+              &lt;/section&gt;
+            &lt;/main&gt;
+            &lt;script src="lunr.min.js"&gt;&lt;/script&gt;
+            &lt;script src="search.js"&gt;&lt;/script&gt;
+          &lt;/body&gt;
+        &lt;/html&gt;
+      </code>
+    </section>
+  </div>
+
+</body>
+</html>
